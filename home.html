@@ -3,673 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lopex Pacific Consultants Ltd | Strategic Mining Advisory & Resource Governance</title>
+    <meta name="description" content="Lopex Pacific Consultants Ltd - Strategic Mining Advisory & Resource Governance Experts">
+    <title>Lopex Pacific Consultants Ltd | Strategic Mining Advisory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --gold-primary: #B8860B;
-            --gold-light: #D4AF37;
-            --gold-dark: #8B6914;
-            --teal-primary: #008B8B;
-            --teal-light: #40E0D0;
-            --teal-dark: #006666;
-            --navy-dark: #0a0f1d;
-            --navy-medium: #1a1f3a;
-            --white: #ffffff;
-            --gray-light: #f8f9fa;
-            --gray-medium: #e9ecef;
-            --gray-dark: #6c757d;
-            --text-dark: #212529;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            overflow-x: hidden;
-            background: var(--white);
-            padding-top: 90px; /* Pushes content below fixed nav without gaps */
-        }
-        img { max-width: 100%; height: auto; display: block; }
-        a { text-decoration: none; color: inherit; transition: 0.3s ease; }
-        ul { list-style: none; }
-        section { padding: 5rem 0; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-
-        /* Loading Screen */
-        .loading-screen { position: fixed; inset: 0; background: var(--navy-dark); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease; }
-        .loading-screen.hidden { opacity: 0; pointer-events: none; }
-        .loading-icon { font-size: 4rem; color: var(--gold-light); animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-        .loading-text { color: var(--gray-medium); margin-top: 1rem; font-weight: 500; letter-spacing: 1px; }
-
-        /* Navigation - FIXED & RESTRUCTURED */
-        #navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 90px;
-            background: rgba(10, 15, 29, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--gold-primary);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 3rem;
-            transition: all 0.3s ease;
-        }
-
-        #navbar.scrolled {
-            height: 110px;
-            padding: 0 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-        .nav-logo {
-            height: 90px; /* ADJUST THIS to resize logo freely */
-            width: auto;
-            object-fit: contain;
-        }
-
-        .nav-tagline {
-            color: var(--teal-light);
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            white-space: nowrap;
-            padding: 0.4rem 0.8rem;
-            /* background: rgba(0, 139, 139, 0.1); */
-           /* border: 1px solid rgba(0, 139, 139, 0.3); */
-            border-radius: 4px;
-        }
-
-        .nav-links-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--white);
-            font-weight: 500;
-            font-size: 0.95rem;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gold-light);
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover { color: var(--gold-light); }
-        .nav-links a:hover::after { width: 100%; }
-
-        .cta-btn {
-            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
-            color: var(--white) !important;
-            padding: 0.6rem 1.4rem;
-            border-radius: 6px;
-            font-weight: 600;
-        }
-        .cta-btn::after { display: none; }
-        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(184,134,11,0.4); }
-
-        .mobile-toggle { display: none; color: var(--gold-light); font-size: 1.5rem; cursor: pointer; }
-
-        /* Hero Section - GAP FIXED */
-        .hero {
-            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-medium) 100%);
-            min-height: 85vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 70%, rgba(212,175,55,0.1) 0%, transparent 50%); }
-        .hero-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
-        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(212,175,55,0.15); border: 1px solid var(--gold-primary); color: var(--gold-light); padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem; }
-        .hero h1 { color: var(--white); font-size: 3.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
-        .hero h1 span { background: linear-gradient(90deg, var(--gold-light), var(--teal-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-subtitle { color: var(--teal-light); font-size: 1.3rem; font-weight: 400; margin-bottom: 1.5rem; letter-spacing: 0.5px; }
-        .hero-desc { color: var(--gray-medium); font-size: 1.1rem; line-height: 1.7; margin-bottom: 2.5rem; }
-        .hero-btns { display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap; }
-        .btn { padding: 0.9rem 2rem; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.3s; display: inline-block; }
-        .btn-primary { background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); color: var(--white); border: none; }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(184,134,11,0.3); }
-        .btn-secondary { background: transparent; color: var(--teal-light); border: 2px solid var(--teal-primary); }
-        .btn-secondary:hover { background: var(--teal-primary); color: var(--white); transform: translateY(-3px); }
-        .hero-features { display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
-        .hero-feat { display: flex; align-items: center; gap: 0.6rem; color: var(--gray-medium); font-size: 0.95rem; }
-        .hero-feat i { color: var(--gold-light); font-size: 1.2rem; }
-
-        /* Stats */
-        .stats { background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary)); color: var(--white); padding: 3.5rem 0; }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: 2rem; }
-        .stat-item h3 { font-size: 3.5rem; font-weight: 700; margin-bottom: 0.3rem; }
-        .stat-item p { font-size: 1.1rem; opacity: 0.9; font-weight: 500; }
-
-        /* Section Headers */
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-tag { color: var(--teal-primary); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 0.8rem; }
-        .section-title { font-size: 2.4rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 1rem; }
-        .section-subtitle { color: var(--gray-dark); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
-
-        /* Services */
-        .services { background: var(--gray-light); }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
-        .service-card { background: var(--white); padding: 2rem; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: 0.3s; border-bottom: 3px solid transparent; position: relative; overflow: hidden; }
-        .service-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-bottom-color: var(--gold-primary); }
-        .service-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-        .service-card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--navy-dark); }
-        .service-card p { color: var(--gray-dark); margin-bottom: 1rem; line-height: 1.6; }
-        .service-list { margin-bottom: 1.2rem; }
-        .service-list li { padding-left: 1.5rem; position: relative; margin-bottom: 0.4rem; color: var(--gray-dark); font-size: 0.95rem; }
-        .service-list li::before { content: '✓'; position: absolute; left: 0; color: var(--gold-primary); font-weight: bold; }
-        .service-link { color: var(--teal-primary); font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; }
-        .service-link:hover { gap: 0.8rem; color: var(--gold-primary); }
-
-        /* Portfolio */
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .portfolio-card { background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); border: 1px solid var(--gray-medium); transition: 0.3s; }
-        .portfolio-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.12); }
-        .portfolio-header { background: var(--navy-dark); color: var(--white); padding: 1.5rem; }
-        .portfolio-location { display: flex; align-items: center; gap: 0.4rem; color: var(--teal-light); font-size: 0.85rem; margin-bottom: 0.5rem; }
-        .portfolio-header h3 { font-size: 1.2rem; }
-        .portfolio-body { padding: 1.5rem; }
-        .portfolio-body p { color: var(--gray-dark); margin-bottom: 1rem; line-height: 1.6; }
-        .portfolio-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .tag { background: var(--gold-light); color: var(--white); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
-        .tag.teal { background: var(--teal-primary); }
-
-        /* About */
-        .about { background: var(--navy-dark); color: var(--white); }
-        .about .section-title { color: var(--white); }
-        .about .section-subtitle { color: var(--gray-medium); }
-        .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-        .about-text p { color: var(--gray-medium); line-height: 1.7; margin-bottom: 1.5rem; }
-        .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
-        .about-feat { display: flex; gap: 0.8rem; }
-        .about-feat i { color: var(--gold-light); font-size: 1.3rem; margin-top: 0.2rem; }
-        .about-feat h4 { font-size: 1rem; margin-bottom: 0.3rem; }
-        .about-feat p { font-size: 0.9rem; color: var(--gray-medium); }
-        .consultant-card { background: var(--white); padding: 2rem; border-radius: 10px; color: var(--navy-dark); text-align: center; }
-        .consultant-avatar { width: 100px; height: 100px; background: linear-gradient(135deg, var(--gold-primary), var(--teal-primary)); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: var(--white); }
-        .consultant-card h3 { font-size: 1.4rem; margin-bottom: 0.3rem; }
-        .consultant-title { color: var(--teal-primary); font-weight: 600; margin-bottom: 1rem; font-size: 0.95rem; }
-        .consultant-creds { font-size: 0.9rem; line-height: 1.6; color: var(--gray-dark); }
-
-        /* Contact */
-        .contact { background: var(--gray-light); }
-        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-        .contact-info h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--navy-dark); }
-        .contact-info > p { color: var(--gray-dark); margin-bottom: 2rem; }
-        .contact-details { display: grid; gap: 1.2rem; }
-        .contact-item { display: flex; gap: 0.8rem; }
-        .contact-item i { color: var(--gold-primary); font-size: 1.2rem; margin-top: 0.3rem; }
-        .contact-item h4 { font-size: 1rem; margin-bottom: 0.2rem; color: var(--navy-dark); }
-        .contact-item p, .contact-item a { color: var(--gray-dark); font-size: 0.95rem; }
-        .contact-item a:hover { color: var(--teal-primary); }
-        .contact-form { background: var(--white); padding: 2rem; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.9rem; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem; border: 1px solid var(--gray-medium); border-radius: 6px; font-family: inherit; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--teal-primary); box-shadow: 0 0 0 3px rgba(0,139,139,0.1); }
-        .submit-btn { width: 100%; background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); color: var(--white); padding: 1rem; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(184,134,11,0.3); }
-
-        /* Footer */
-        footer { background: var(--navy-dark); color: var(--white); padding: 4rem 0 2rem; border-top: 3px solid var(--gold-primary); }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; margin-bottom: 3rem; }
-        .footer-brand img { height: 60px; margin-bottom: 1rem; }
-        .footer-brand p { color: var(--gray-medium); line-height: 1.6; margin-bottom: 1rem; font-size: 0.95rem; }
-        .footer-col h4 { color: var(--gold-light); margin-bottom: 1.2rem; font-size: 1.1rem; }
-        .footer-col ul li { margin-bottom: 0.6rem; }
-        .footer-col ul li a { color: var(--gray-medium); font-size: 0.95rem; }
-        .footer-col ul li a:hover { color: var(--teal-light); }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; text-align: center; color: var(--gray-medium); font-size: 0.85rem; }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .about-content, .contact-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-            #navbar { padding: 0 1.5rem; height: auto; flex-wrap: wrap; }
-            .nav-tagline { display: none; } /* Hide tagline on tablets to save space */
-        }
-        @media (max-width: 768px) {
-            .nav-links-wrapper { width: 100%; justify-content: flex-end; }
-            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--navy-dark); flex-direction: column; padding: 1.5rem; gap: 1rem; border-top: 1px solid var(--gold-primary); }
-            .nav-links.active { display: flex; }
-            .mobile-toggle { display: block; }
-            .hero h1 { font-size: 2.2rem; }
-            .stats-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .form-row { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .hero-features { flex-direction: column; align-items: center; gap: 1rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+   <body>
     <!-- Loading Screen -->
     <div class="loading-screen" id="loader">
         <i class="fas fa-gem loading-icon"></i>
         <div class="loading-text">Loading Lopex Pacific...</div>
     </div>
 
-    <!-- Navigation - RESTRUCTURED -->
-    <nav id="navbar">
-        <img src="lopex pacific logo.png" alt="Lopex Pacific Consultants Limited" class="nav-logo">
+    <!-- Navbar starts here... -->
+    <nav class="navbar" id="navbar">
+    <!-- Logo Container (Independent) -->
+    <div class="navbar-logo-container">
+        <a href="#home" class="navbar-brand">
+            <img src="lopex pacific logo.png" alt="Lopex Pacific">
+        
+        </a>
+    </div>
+    
+    <!-- Navigation Menu Container (Independent) -->
+    <div class="navbar-menu-container">
+        <ul class="navbar-menu">
+            <li><a href="#home" class="navbar-link active-link">Home</a></li>
+            <li><a href="#services" class="navbar-link">Services</a></li>
+            <li><a href="#portfolio" class="navbar-link">Portfolio</a></li>
+            <li><a href="#about" class="navbar-link">About</a></li>
+            <li><a href="#contact" class="navbar-link">Contact</a></li>
+        </ul>
+        <div class="navbar-cta"><a href="#contact" class="btn btn-primary">Engage Us</a></div>
+        <button class="navbar-toggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
 
-        <div class="nav-tagline">MINING • OIL & GAS • ENERGY</div>
-
-        <div class="nav-links-wrapper">
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#contact" class="cta-btn">Engage Us</a></li>
-            </ul>
-            <div class="mobile-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container hero-content">
-            <div class="hero-badge"><i class="fas fa-trophy"></i> Strategic Mining & Resource Governance Experts</div>
-            <h1>Transforming <span>Mining Sector Governance</span> Across the Pacific</h1>
-            <p class="hero-subtitle">Mining Advisory • Legislative Reform • Resource Governance</p>
-            <p class="hero-desc">Lopex Pacific Consultants Ltd delivers cutting-edge solutions in legislative reform, technical appraisal, infrastructure-linked development, and governance modernization. Trusted by governments, development agencies, and communities.</p>
-            <div class="hero-btns">
-                <a href="#services" class="btn btn-primary">Our Expertise</a>
-                <a href="#portfolio" class="btn btn-secondary">View Projects</a>
+        <!-- Hero Section (Full-Width Text) -->
+    <section class="hero active-section" id="home">
+        <div class="hero-container">
+            <h1 class="hero-title">Transforming<span class="highlight-gold">Mining Sector</span> &<br>Governance <span class="highlight-teal">Across the Pacific</span></h1>
+           <!-- <div class="hero-badge">Mining Advisory • Legislative Reform • Resource Governance</div>-->
+            <p class="hero-tagline">Future-proof mining solutions for the Pacific and beyond.</p>
+            <p class="hero-description">We are a Papua New Guinea-based consultancy focused on mining sector reform, technical appraisal, and governance. We work directly with governments, development agencies, and communities to build practical, long-term solutions.</p>
+            
+            
+            <div class="hero-buttons">
+                <a href="#services" class="btn btn-primary">Our Services</a>
+                <a href="#contact" class="btn btn-secondary">Talk to Our Team</a>
             </div>
-            <div class="hero-features">
-                <div class="hero-feat"><i class="fas fa-balance-scale"></i> Legislative Reform</div>
-                <div class="hero-feat"><i class="fas fa-chart-line"></i> Policy Advisory</div>
-                <div class="hero-feat"><i class="fas fa-laptop-code"></i> Digital Governance</div>
-                <div class="hero-feat"><i class="fas fa-map-marked-alt"></i> Strategic Mapping</div>
+        
+
+        <!-- NEW: Dedicated Focus Areas Block (Full Width) -->
+        <div class="focus-areas-block">
+            <div class="container">
+                <div class="strategic-focus-row">
+                    <div class="focus-item">
+                        <div class="focus-icon"><i class="fas fa-scale-balanced"></i></div>
+                        <h4 class="focus-title">Governance Reform</h4>
+                        <p class="focus-text">Reform extractive sector governance with technically rigorous, socially inclusive frameworks.</p>
+                    </div>
+                    <div class="focus-item">
+                        <div class="focus-icon"><i class="fas fa-map-location-dot"></i></div>
+                        <h4 class="focus-title">Strategic Corridors</h4>
+                        <p class="focus-text">Unlock strategic mineral corridors and align national development goals with global best practice.</p>
+                    </div>
+                    <div class="focus-item">
+                        <div class="focus-icon"><i class="fas fa-city"></i></div>
+                        <h4 class="focus-title">Resilient Infrastructure</h4>
+                        <p class="focus-text">Build resilient infrastructure systems and future-proof mining sector solutions.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats -->
-    <section class="stats">
-        <div class="container stats-grid">
-            <div class="stat-item"><h3 class="counter" data-target="30">0</h3><p>Years Experience</p></div>
-            <div class="stat-item"><h3 class="counter" data-target="10">0</h3><p>Countries Served</p></div>
-            <div class="stat-item"><h3 class="counter" data-target="50">0</h3><p>Major Reforms Led</p></div>
-        </div>
-    </section>
-
-    <!-- Services -->
-    <section class="services" id="services">
+    <section class="services section-padding" id="services">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">What We Do</span>
                 <h2 class="section-title">Core Services</h2>
-                <p class="section-subtitle">Specialized advisory services for mining sector transformation and resource governance excellence</p>
+                <p class="section-description">Specialized advisory services for mining sector transformation and resource governance excellence</p>
             </div>
             <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">⚖️</div>
-                    <h3>Legislative Drafting & Reform</h3>
-                    <p>Expert drafting and revision of mining, energy, and infrastructure legislation integrating technical upgrades and international best practice.</p>
-                    <ul class="service-list">
-                        <li>Mineral Resources Bill 2023 (Solomon Islands)</li>
-                        <li>PNG Mining Act 1992 amendments</li>
-                        <li>Permitting frameworks & Mines Board templates</li>
-                    </ul>
-                    <a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">📋</div>
-                    <h3>Strategic Policy Advisory</h3>
-                    <p>High-level policy advice to Cabinet, legislative committees, and development partners for evidence-based decision making.</p>
-                    <ul class="service-list">
-                        <li>Cabinet submissions & implementation frameworks</li>
-                        <li>Comparative benchmarking across Pacific jurisdictions</li>
-                        <li>Plain-language policy briefs & stakeholder packs</li>
-                    </ul>
-                    <a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">💻</div>
-                    <h3>Governance Modernization</h3>
-                    <p>Institutional reform support through digital integration, regulatory streamlining, and transparent system design.</p>
-                    <ul class="service-list">
-                        <li>FlexiCadastre, GIS & lab data integration</li>
-                        <li>Regulatory streamlining & capacity building</li>
-                        <li>Institutional design for accountability</li>
-                    </ul>
-                    <a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">📈</div>
-                    <h3>Feasibility & Financial Modeling</h3>
-                    <p>Robust project evaluation and investment readiness analysis for mining and infrastructure developments.</p>
-                    <ul class="service-list">
-                        <li>Life-of-Mine design & pit optimization</li>
-                        <li>Cashflow modeling for mining projects</li>
-                        <li>Corridor designation & mineral prospect mapping</li>
-                    </ul>
-                    <a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🤝</div>
-                    <h3>Stakeholder Engagement & ESG</h3>
-                    <p>Participatory governance leadership: building consensus across government, landowners, and civil society.</p>
-                    <ul class="service-list">
-                        <li>Consensus-building across diverse stakeholders</li>
-                        <li>Community advocacy synthesis into policy</li>
-                        <li>ESG strategy & social license facilitation</li>
-                    </ul>
-                    <a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"></div>
-                    <h3>Strategic Media & Public Narrative</h3>
-                    <p>Strategic media consultancy to shape public discourse, build trust, and align stakeholder perspectives.</p>
-                    <ul class="service-list">
-                        <li>Media platform management & content strategy</li>
-                        <li>Public education campaigns & briefings</li>
-                        <li>Narrative framing for national resource companies</li>
-                    </ul>
-                    <a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-gavel"></i></div><h3 class="service-title">Legislative Drafting & Reform</h3><p class="service-description">Drafting and revising mining, energy, and infrastructure legislation. We integrate technical upgrades, stakeholder safeguards, and international best practice into legal frameworks.</p><ul class="service-features"><li>Mineral Resources Bill 2023 (Solomon Islands)</li><li>Amendments to PNG’s Mining Act 1992</li><li>Permitting frameworks and Mines Board templates</li></ul><a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-clipboard-list"></i></div><h3 class="service-title">Strategic Policy Advisory</h3><p class="service-description">Providing high-level policy advice to Cabinet, legislative committees, and development partners to support evidence-based decision making.</p><ul class="service-features"><li>Cabinet submissions and implementation frameworks</li><li>Comparative benchmarking across Pacific jurisdictions</li><li>Plain-language policy briefs and stakeholder packs</li></ul><a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-laptop-code"></i></div><h3 class="service-title">Governance Modernization</h3><p class="service-description">Supporting institutional reform by integrating digital systems, streamlining regulations, and building capacity for transparent accountability.</p><ul class="service-features"><li>Integration of FlexiCadastre, GIS, and lab data</li><li>Regulatory streamlining and capacity building</li><li>Institutional design for transparency</li></ul><a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-chart-line"></i></div><h3 class="service-title">Feasibility & Financial Modeling</h3><p class="service-description">Delivering robust project evaluation and investment readiness analysis for mining and infrastructure developments.</p><ul class="service-features"><li>Life-of-Mine (LOM) design and pit optimization</li><li>Cashflow modeling for mining projects</li><li>Corridor designation and mineral prospect mapping</li></ul><a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-handshake"></i></div><h3 class="service-title">Stakeholder Engagement & ESG</h3><p class="service-description">Leading participatory governance by building consensus across government, landowners, and civil society to ensure inclusive and equitable reforms.</p><ul class="service-features"><li>Consensus-building across diverse stakeholders</li><li>Synthesis of community advocacy into policy</li><li>ESG strategy and social license facilitation</li></ul><a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-bullhorn"></i></div><h3 class="service-title">Strategic Media & Public Narrative</h3><p class="service-description">Offering strategic media consultancy to shape public discourse, build trust, and align stakeholder perspectives for national resource companies.</p><ul class="service-features"><li>Media platform management and content strategy</li><li>Public education campaigns and stakeholder briefings</li><li>Narrative framing for resource companies</li></ul><a href="#contact" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a></div>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio -->
-    <section class="portfolio" id="portfolio">
+    <section class="portfolio section-padding" id="portfolio">
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Our Work</span>
                 <h2 class="section-title">Project Portfolio</h2>
-                <p class="section-subtitle">Delivering impactful reforms and strategic advisory across the Pacific region and beyond</p>
+                <p class="section-description">Delivering impactful reforms and strategic advisory across the Pacific region and beyond</p>
             </div>
             <div class="portfolio-grid">
-                <div class="portfolio-card">
-                    <div class="portfolio-header">
-                        <div class="portfolio-location"><i class="fas fa-map-marker-alt"></i> Honiara, Solomon Islands</div>
-                        <h3>Solomon Islands Mining Master Plan</h3>
-                    </div>
-                    <div class="portfolio-body">
-                        <p>Comprehensive sector reform leading urgent modernization of mining governance and digital infrastructure.</p>
-                        <ul class="service-list">
-                            <li>Drafting and integration of digital cadastre & geochemical lab</li>
-                            <li>SOE equity participation framework design</li>
-                            <li>Corridor designation and mineral prospect mapping</li>
-                        </ul>
-                        <div class="portfolio-tags"><span class="tag">Legislative Reform</span><span class="tag teal">Digital Governance</span></div>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="portfolio-header">
-                        <div class="portfolio-location"><i class="fas fa-map-marker-alt"></i> Port Moresby, Papua New Guinea</div>
-                        <h3>PNG Mining Act Reform Support</h3>
-                    </div>
-                    <div class="portfolio-body">
-                        <p>Strategic support for national legislative updates to align with regional benchmarks and investment goals.</p>
-                        <ul class="service-list">
-                            <li>Comparative analysis of Mining Act 1992</li>
-                            <li>Drafting of enabling legislation for technical upgrades</li>
-                            <li>Feasibility modeling and investment screening</li>
-                        </ul>
-                        <div class="portfolio-tags"><span class="tag">Policy Advisory</span><span class="tag teal">Legislative Drafting</span></div>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="portfolio-header">
-                        <div class="portfolio-location"><i class="fas fa-map-marker-alt"></i> Papua New Guinea</div>
-                        <h3>CEPA Environmental Governance Advisory</h3>
-                    </div>
-                    <div class="portfolio-body">
-                        <p>Enhancing environmental permitting frameworks and inter-agency coordination for sustainable resource development.</p>
-                        <ul class="service-list">
-                            <li>Development of permitting frameworks and safeguards</li>
-                            <li>Inter-agency coordination and compliance streamlining</li>
-                            <li>Stakeholder consultation and capacity building</li>
-                        </ul>
-                        <div class="portfolio-tags"><span class="tag">Governance</span><span class="tag teal">Environmental</span></div>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="portfolio-header">
-                        <div class="portfolio-location"><i class="fas fa-map-marker-alt"></i> Papua New Guinea</div>
-                        <h3>Strategic Media Consultancy – Kumul Petroleum</h3>
-                    </div>
-                    <div class="portfolio-body">
-                        <p>Managing public narrative and stakeholder alignment for the national resource company.</p>
-                        <ul class="service-list">
-                            <li>Managed platforms with over 100,000 members</li>
-                            <li>Shaped public trust and narrative around national resource development</li>
-                            <li>Delivered targeted messaging and stakeholder alignment strategies</li>
-                        </ul>
-                        <div class="portfolio-tags"><span class="tag">Media Strategy</span><span class="tag teal">Public Relations</span></div>
-                    </div>
-                </div>
+                <div class="portfolio-card"><div class="portfolio-header"><div class="portfolio-location"><i class="fas fa-map-marker-alt"></i> Honiara, Solomon Islands</div><h3 class="portfolio-title">Solomon Islands Mining Master Plan</h3><p class="portfolio-description">Comprehensive sector reform leading urgent modernization of mining governance and digital infrastructure.</p></div><div class="portfolio-body"><ul class="portfolio-features"><li>Drafting and integration of digital cadastre & geochemical lab</li><li>SOE equity participation framework design</li><li>Corridor designation and mineral prospect mapping</li></ul><div class="portfolio-tags"><span class="portfolio-tag">Legislative Reform</span><span class="portfolio-tag">Digital Governance</span></div></div></div>
+                <div class="portfolio-card"><div class="portfolio-header"><div class="portfolio-location"><i class="fas fa-map-marker-alt"></i> Port Moresby, Papua New Guinea</div><h3 class="portfolio-title">PNG Mining Act Reform Support</h3><p class="portfolio-description">Strategic support for national legislative updates to align with regional benchmarks and investment goals.</p></div><div class="portfolio-body"><ul class="portfolio-features"><li>Comparative analysis of Mining Act 1992</li><li>Drafting of enabling legislation for technical upgrades</li><li>Feasibility modeling and investment screening</li></ul><div class="portfolio-tags"><span class="portfolio-tag">Policy Advisory</span><span class="portfolio-tag">Legislative Drafting</span></div></div></div>
+                <div class="portfolio-card"><div class="portfolio-header"><div class="portfolio-location"><i class="fas fa-map-marker-alt"></i> Papua New Guinea</div><h3 class="portfolio-title">CEPA Environmental Governance Advisory</h3><p class="portfolio-description">Enhancing environmental permitting frameworks and inter-agency coordination for sustainable resource development.</p></div><div class="portfolio-body"><ul class="portfolio-features"><li>Development of permitting frameworks and safeguards</li><li>Inter-agency coordination and compliance streamlining</li><li>Stakeholder consultation and capacity building</li></ul><div class="portfolio-tags"><span class="portfolio-tag">Governance</span><span class="portfolio-tag">Environmental</span></div></div></div>
+                <div class="portfolio-card"><div class="portfolio-header"><div class="portfolio-location"><i class="fas fa-map-marker-alt"></i> Papua New Guinea</div><h3 class="portfolio-title">Strategic Media Consultancy – Kumul Petroleum</h3><p class="portfolio-description">Managing public narrative and stakeholder alignment for the national resource company.</p></div><div class="portfolio-body"><ul class="portfolio-features"><li>Managed platforms with over 100,000 members</li><li>Shaped public trust and narrative around national resource development</li><li>Delivered targeted messaging and stakeholder alignment strategies</li></ul><div class="portfolio-tags"><span class="portfolio-tag">Media Strategy</span><span class="portfolio-tag">Public Relations</span></div></div></div>
             </div>
         </div>
     </section>
 
-    <!-- About -->
-    <section class="about" id="about">
+    <section class="about section-padding" id="about">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag" style="color:var(--teal-light)">About Us</span>
-                <h2 class="section-title">Driving Mining Sector Transformation</h2>
-                <p class="section-subtitle">Lopex Pacific Consultants Ltd is a Papua New Guinea–based mining sector consultancy delivering cutting-edge solutions in legislative reform, technical appraisal, infrastructure-linked development, and governance modernization.</p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p><i class="fas fa-building" style="color:var(--gold-light);margin-right:0.5rem"></i><strong>Registered & Compliant</strong><br>Investment Promotion Authority (IPA) under Companies Act of PNG | Internal Revenue Commission (IRC) compliant for tax registration and statutory obligations</p>
-                    <p>Headquartered in Port Moresby with active project offices in Honiara, Solomon Islands, we operate at the forefront of mining sector transformation across the Pacific, with a growing footprint in Africa and global advisory networks.</p>
+            <div class="about-grid">
+                <div class="about-content">
+                    <span class="section-tag">About Us</span>
+                    <h2>Driving Mining Sector Transformation</h2>
+                    <p class="about-text">Lopex Pacific is a Papua New Guinea-based consultancy focused on mining sector reform, technical appraisal, and governance. We are formally registered with the Investment Promotion Authority (IPA) and maintain full compliance with the Internal Revenue Commission (IRC).</p>
+                    <p class="about-text">Headquartered in Port Moresby with active project offices in Honiara, Solomon Islands, we operate at the forefront of mining sector transformation across the Pacific, with a growing footprint in Africa and global advisory networks.</p>
                     <div class="about-features">
-                        <div class="about-feat"><i class="fas fa-globe"></i><div><h4>Regional Expertise</h4><p>Deep familiarity with Pacific legal systems, governance structures, and cultural contexts</p></div></div>
-                        <div class="about-feat"><i class="fas fa-laptop-code"></i><div><h4>Technical Integration</h4><p>Frontline deployment of FlexiCadastre, GIS mapping, and lab data integration</p></div></div>
-                        <div class="about-feat"><i class="fas fa-handshake"></i><div><h4>Stakeholder-Centric</h4><p>Participatory governance ensuring reforms are inclusive, equitable, sustainable</p></div></div>
-                        <div class="about-feat"><i class="fas fa-bullhorn"></i><div><h4>Strategic Communication</h4><p>Translating complex technical concepts into accessible formats for diverse audiences</p></div></div>
+                        <div class="about-feature"><div class="about-feature-icon"><i class="fas fa-globe-oceania"></i></div><div class="about-feature-content"><h3>Regional Expertise</h3><p>Deep familiarity with Pacific legal systems, governance structures, and cultural contexts.</p></div></div>
+                        <div class="about-feature"><div class="about-feature-icon"><i class="fas fa-microchip"></i></div><div class="about-feature-content"><h3>Technical Integration</h3><p>Frontline deployment of FlexiCadastre, GIS mapping, and lab data integration.</p></div></div>
+                        <div class="about-feature"><div class="about-feature-icon"><i class="fas fa-users"></i></div><div class="about-feature-content"><h3>Stakeholder-Centric</h3><p>Participatory governance ensuring reforms are inclusive, equitable, and sustainable.</p></div></div>
+                        <div class="about-feature"><div class="about-feature-icon"><i class="fas fa-comments"></i></div><div class="about-feature-content"><h3>Strategic Communication</h3><p>Translating complex technical and legal concepts into accessible formats for diverse audiences.</p></div></div>
                     </div>
                 </div>
-                <div class="consultant-card">
-                    <div class="consultant-avatar"><i class="fas fa-user-tie"></i></div>
-                    <h3>Sam Kaupa</h3>
-                    <p class="consultant-title">Principal Consultant<br>Chief Mining Sector Advisor – Solomon Islands Government</p>
-                    <p class="consultant-creds"><strong>BE (Mining) | MAusIMM | MIEPNG</strong><br><br>Over 30 years spanning mine operations, government regulation, and international consultancy. Currently leading urgent reforms in mining legislation, benefit-sharing frameworks, and digital modernization of sector governance under the World Bank's Sustainable Mining Development Technical Assistance Project (SMDTAP).</p>
+                <div class="about-visual">
+                    <div class="consultant-card">
+                        <div class="consultant-image-wrapper"><img src="sam-kaupa.jpg" alt="Sam Kaupa - Principal Consultant" class="consultant-photo"></div>
+                        <h3 class="consultant-name">Sam Kaupa</h3>
+                        <p class="consultant-title">Principal Consultant<br>Chief Mining Sector Advisor – Solomon Islands Government</p>
+                        <p class="consultant-creds">BE (Mining) | MAusIMM | MIEPNG</p>
+                        <p class="consultant-bio">Sam is a mining engineer and strategic advisor with over 30 years of experience. He currently advises the Solomon Islands Prime Minister on resource sovereignty, fiscal security, and long-term mineral governance. Previously, he served as the Chief Mining Sector Advisor for the World Bank's SMDTAP project.</p>
+                        <p class="consultant-bio" style="margin-top: 10px;">Before his advisory roles, Sam held senior leadership positions including Deputy Manager at PNG's Mineral Resources Authority (MRA), and Chief Mining Engineer or Mine Superintendent for major international operators like Barrick Gold, BHP Billiton, AngloGold Ashanti, and Perseus Mining across PNG, Africa, and the Pacific.</p>
+                    </div>
                 </div>
+            </div>
+            
+            <div class="section-header" style="margin-top: 4rem;">
+                <span class="section-tag">Professional Background</span>
+                <h2 class="section-title">30 Years of Mining & Governance</h2>
+                <p class="section-description">A proven track record spanning government policy, international mining operations, and regulatory leadership.</p>
+            </div>
+            <div class="experience-grid">
+                <div class="experience-card"><div class="experience-icon"><i class="fas fa-landmark"></i></div><h3 class="experience-title">Government & Policy Advisory</h3><ul class="experience-list"><li><strong>Strategic Policy Analyst & Chief Advisor to the Prime Minister</strong> (Solomon Islands Government)</li><li><strong>Chief Mining Sector Advisor</strong> (World Bank SMDTAP Project)</li><li><strong>Deputy Manager, Technical Assessment Branch</strong> (Mineral Resources Authority, PNG)</li><li><strong>Principal Mining Consultant</strong> (Lopex Pacific Consultants Ltd)</li></ul></div>
+                <div class="experience-card"><div class="experience-icon"><i class="fas fa-globe-africa"></i></div><h3 class="experience-title">International Mining Operations</h3><ul class="experience-list"><li><strong>Chief Mining Engineer</strong> (Perseus Mining - Ghana & Ivory Coast)</li><li><strong>Chief Mining Engineer / Alt. Manager</strong> (Mawson West - D.R. Congo)</li><li><strong>Head of Mining & Mining Manager</strong> (RIDA Group - Sudan)</li><li><strong>Mine Superintendent</strong> (AngloGold Ashanti - Mali)</li><li><strong>Resident Mine Manager</strong> (Niuminco Mining - Edie Creek, PNG)</li></ul></div>
+                <div class="experience-card"><div class="experience-icon"><i class="fas fa-hard-hat"></i></div><h3 class="experience-title">PNG Mining & Infrastructure</h3><ul class="experience-list"><li><strong>Senior Mining Engineer</strong> (Barrick Gold - Porgera)</li><li><strong>Long Term Planning Engineer</strong> (BHP Billiton - Ok Tedi)</li><li><strong>Open Pit Superintendent</strong> (Morobe Mining JV - Hidden Valley)</li><li><strong>Company Representative / BOT Manager</strong> (NCD Water & Sewerage Ltd)</li><li><strong>Production Planning Engineer</strong> (Placer Dome - Porgera)</li></ul></div>
             </div>
         </div>
     </section>
 
-    <!-- Contact -->
-    <section class="contact" id="contact">
+    <section class="contact section-padding" id="contact">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Get In Touch</span>
+                <span class="section-tag" style="background: rgba(184, 149, 78, 0.2); color: var(--gold-dark);">Get In Touch</span>
                 <h2 class="section-title">Ready to Transform Your Mining Sector?</h2>
-                <p class="section-subtitle">Our experts are ready to partner with you on governance modernization and resource development strategy.</p>
+                <p class="section-description">Our experts are ready to partner with you on governance modernization and resource development strategy.</p>
             </div>
             <div class="contact-grid">
                 <div class="contact-info">
                     <h3>Contact Information</h3>
-                    <p>Reach out to discuss how we can support your mining sector governance and resource development initiatives.</p>
+                    <p style="color: var(--gray-600); margin-bottom: var(--space-2xl);">Reach out to discuss how we can support your mining sector governance and resource development initiatives.</p>
                     <div class="contact-details">
-                        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><div><h4>Headquarters</h4><p>Port Moresby<br>Papua New Guinea</p></div></div>
-                        <div class="contact-item"><i class="fas fa-envelope"></i><div><h4>Postal Address</h4><p>P. O. Box 4564<br>BOROKO, NCD<br>Papua New Guinea</p></div></div>
-                        <div class="contact-item"><i class="fas fa-building"></i><div><h4>Project Offices</h4><p>Honiara, Solomon Islands<br>Active regional engagement across Pacific & Africa</p></div></div>
-                        <div class="contact-item"><i class="fas fa-envelope"></i><div><h4>Email</h4><p><a href="mailto:samporgera@gmail.com">samporgera@gmail.com</a></p></div></div>
-                        <div class="contact-item"><i class="fas fa-phone"></i><div><h4>Phone</h4><p><a href="tel:+67572699036">+675 72699036</a></p></div></div>
-                        <div class="contact-item"><i class="fas fa-certificate"></i><div><h4>Company Registration</h4><p>IPA Registered: Companies Act of Papua New Guinea<br>IRC Compliant: Tax registration & statutory obligations</p></div></div>
+                        <div class="contact-item"><div class="contact-icon"><i class="fas fa-building"></i></div><div class="contact-item-content"><h4>Headquarters</h4><p>Port Moresby, Papua New Guinea</p></div></div>
+                        <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope-open-text"></i></div><div class="contact-item-content"><h4>Postal Address</h4><p>P. O. Box 4564, BOROKO, NCD<br>Papua New Guinea</p></div></div>
+                        <div class="contact-item"><div class="contact-icon"><i class="fas fa-briefcase"></i></div><div class="contact-item-content"><h4>Project Offices</h4><p>Honiara, Solomon Islands</p></div></div>
+                        <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div class="contact-item-content"><h4>Email</h4><a href="mailto:samporgera@gmail.com">samporgera@gmail.com</a></div></div>
+                        <div class="contact-item"><div class="contact-icon"><i class="fas fa-phone"></i></div><div class="contact-item-content"><h4>Phone</h4><a href="tel:+67572699036">+675 72699036</a></div></div>
                     </div>
+                    <div class="contact-compliance"><h4><i class="fas fa-shield-alt"></i> Company Registration</h4><p>IPA Registered: Companies Act of Papua New Guinea<br>IRC Compliant: Tax registration & statutory obligations</p></div>
                 </div>
-                <div class="contact-form">
-                    <form id="inquiryForm">
+                <div class="contact-form-wrapper">
+                    <h3 class="contact-form-title">Submit an Enquiry</h3>
+                    <p class="contact-form-subtitle">Fill out the form below and we'll get back to you within 24-48 hours.</p>
+                    <form action="https://formspree.io/f/moeqdwkr" method="POST" class="custom-contact-form">
                         <div class="form-row">
-                            <div class="form-group"><label>First Name *</label><input type="text" required></div>
-                            <div class="form-group"><label>Last Name *</label><input type="text" required></div>
+                            <div class="form-group"><label for="firstName">First Name *</label><input type="text" id="firstName" name="firstName" required placeholder="John"></div>
+                            <div class="form-group"><label for="lastName">Last Name *</label><input type="text" id="lastName" name="lastName" required placeholder="Doe"></div>
                         </div>
-                        <div class="form-group"><label>Organization *</label><input type="text" required></div>
+                        <div class="form-group"><label for="organization">Organization / Company *</label><input type="text" id="organization" name="organization" required placeholder="Your Company or Agency"></div>
                         <div class="form-row">
-                            <div class="form-group"><label>Phone *</label><input type="tel" required></div>
-                            <div class="form-group"><label>Email Address *</label><input type="email" required></div>
+                            <div class="form-group"><label for="email">Email Address *</label><input type="email" id="email" name="email" required placeholder="john@example.com"></div>
+                            <div class="form-group"><label for="phone">Phone Number</label><input type="tel" id="phone" name="phone" placeholder="+675 7XXX XXXX"></div>
                         </div>
-                        <div class="form-group">
-                            <label>Service Interest *</label>
-                            <select required>
-                                <option value="">Select a service...</option>
-                                <option value="legislative">Legislative Drafting & Reform</option>
-                                <option value="policy">Strategic Policy Advisory</option>
-                                <option value="governance">Governance Modernization</option>
-                                <option value="feasibility">Feasibility & Financial Modeling</option>
-                                <option value="stakeholder">Stakeholder Engagement & ESG</option>
-                                <option value="media">Strategic Media & Public Narrative</option>
-                                <option value="general">General Inquiry</option>
-                            </select>
-                        </div>
-                        <div class="form-group"><label>Project Overview *</label><textarea rows="4" placeholder="Tell us about your project or inquiry..." required></textarea></div>
-                        <button type="submit" class="submit-btn">Submit Inquiry</button>
+                        <div class="form-group"><label for="service">Service Interest *</label><select id="service" name="service" required><option value="" disabled selected>Select a service...</option><option value="Legislative Drafting & Reform">Legislative Drafting & Reform</option><option value="Strategic Policy Advisory">Strategic Policy Advisory</option><option value="Governance Modernization">Governance Modernization</option><option value="Feasibility & Financial Modeling">Feasibility & Financial Modeling</option><option value="Stakeholder Engagement & ESG">Stakeholder Engagement & ESG</option><option value="Strategic Media & Public Narrative">Strategic Media & Public Narrative</option><option value="General Inquiry">General Inquiry</option></select></div>
+                        <div class="form-group"><label for="overview">Project Overview *</label><textarea id="overview" name="overview" rows="4" required placeholder="Please briefly describe your project or inquiry..."></textarea></div>
+                        <button type="submit" class="btn btn-primary form-submit-btn">Submit Inquiry <i class="fas fa-paper-plane"></i></button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <img src="lopex pacific logo.png" alt="Lopex Pacific Consultants Limited">
-                    <p>Strategic mining sector consultancy delivering legislative reform, technical appraisal, and governance modernization across Papua New Guinea, Solomon Islands, and the Pacific region.</p>
-                    <p style="color:var(--teal-light);font-size:0.9rem">IPA Registered | IRC Compliant<br>Mining Advisory • Legislative Reform • Resource Governance</p>
+                    <a href="#home" class="navbar-brand"><img src="lopex pacific logo.png" alt="Lopex Pacific"><span>Lopex Pacific</span></a>
+                    <p class="footer-description">Strategic mining sector consultancy delivering legislative reform, technical appraisal, and governance modernization across Papua New Guinea, Solomon Islands, and the Pacific region.</p>
                 </div>
-                <div class="footer-col">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="#services">Legislative Reform</a></li>
-                        <li><a href="#services">Policy Advisory</a></li>
-                        <li><a href="#services">Governance Modernization</a></li>
-                        <li><a href="#services">Feasibility Modeling</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#portfolio">Portfolio</a></li>
-                        <li><a href="#about">Principal Consultant</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Contact</h4>
-                    <ul>
-                        <li><a href="#contact">Port Moresby, PNG</a></li>
-                        <li><a href="mailto:samporgera@gmail.com">samporgera@gmail.com</a></li>
-                        <li><a href="tel:+67572699036">+675 72699036</a></li>
-                        <li><a href="#contact">IPA Registered</a></li>
-                    </ul>
-                </div>
+                <div><h4 class="footer-title">Services</h4><ul class="footer-links"><li><a href="#services">Legislative Reform</a></li><li><a href="#services">Policy Advisory</a></li><li><a href="#services">Governance Modernization</a></li><li><a href="#services">Feasibility Modeling</a></li></ul></div>
+                <div><h4 class="footer-title">Company</h4><ul class="footer-links"><li><a href="#about">About Us</a></li><li><a href="#portfolio">Portfolio</a></li><li><a href="#about">Principal Consultant</a></li><li><a href="#contact">Contact</a></li></ul></div>
+                <div><h4 class="footer-title">Contact</h4><ul class="footer-links"><li><a href="#contact">Port Moresby, PNG</a></li><li><a href="mailto:samporgera@gmail.com">samporgera@gmail.com</a></li><li><a href="tel:+67572699036">+675 72699036</a></li><li><a href="#contact">IPA Registered</a></li></ul></div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2019-2026 Lopex Pacific Consultants Ltd. All Rights Reserved. | IPA Registered Company | Papua New Guinea</p>
+                <p class="footer-copyright">© 2019-2026 Lopex Pacific Consultants Ltd. All Rights Reserved.</p>
+                <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">IPA Registered Company | Papua New Guinea</a></div>
             </div>
         </div>
     </footer>
 
-    <script>
-        // Loading Screen
-        window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1200));
-
-        // Navbar Scroll & Mobile Toggle
-        const nav = document.getElementById('navbar');
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
-
-        window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
-        menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
-        navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
-
-        // Stats Counter Animation
-        const counters = document.querySelectorAll('.counter');
-        const speed = 200;
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = +counter.getAttribute('data-target');
-                    const update = () => {
-                        const current = +counter.innerText;
-                        const increment = target / speed;
-                        if(current < target) {
-                            counter.innerText = Math.ceil(current + increment) + '+';
-                            setTimeout(update, 20);
-                        } else {
-                            counter.innerText = target + '+';
-                        }
-                    };
-                    update();
-                    observer.unobserve(counter);
-                }
-            });
-        }, { threshold: 0.5 });
-        counters.forEach(c => observer.observe(c));
-
-        // Form Handling
-        document.getElementById('inquiryForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your inquiry. Our team will contact you shortly.');
-            this.reset();
-        });
-
-        // Scroll Animations
-        const fadeElements = document.querySelectorAll('.service-card, .portfolio-card, .about-feat');
-        const fadeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    fadeObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        fadeElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            fadeObserver.observe(el);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
