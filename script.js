@@ -39,10 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
             targetSection.classList.add('active-section');
         }
 
-        const activeLink = document.querySelector(`a[href="${targetId}"]`);
-        if (activeLink) {
-            activeLink.classList.add('active-link');
-        }
+        const activeLinks = document.querySelectorAll(`a[href="${targetId}"]`);
+        activeLinks.forEach(link => link.classList.add('active-link'));
 
         if (navbarMenuContainer) {
             navbarMenuContainer.classList.remove('mobile-open');

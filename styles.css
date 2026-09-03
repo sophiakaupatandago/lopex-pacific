@@ -26,15 +26,18 @@
 @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 .loading-text { color: var(--gray-300); margin-top: 1rem; font-weight: 500; letter-spacing: 1px; font-family: var(--font-sans); }
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; overscroll-behavior-y: none; }
    body { 
        font-family: var(--font-sans); 
        font-size: 1rem; 
        line-height: 1.6; 
        color: var(--gray-800); 
        background: #F9FAFB; /* Changed from #fff to unified light grey */
+       overscroll-behavior-y: none;
    }
+a, button, .btn, .navbar-link, .tabbar-link, .service-link { -webkit-tap-highlight-color: transparent; }
+a:active, button:active, .btn:active { transform: scale(0.97); }
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-serif); font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
 h1 { font-size: clamp(2.5rem, 5vw, 4rem); } h2 { font-size: clamp(2rem, 4vw, 3rem); } h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
 p { color: var(--gray-600); line-height: 1.7; }
@@ -101,9 +104,9 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 .navbar-brand img {
-    height: 150px;
+    height: 170px;
     width: auto;
-    max-width: 220px;
+    max-width: 320px;
     object-fit: contain;
     display: block;
     /* Add smooth transition for the energy effect */
@@ -241,11 +244,67 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* =========================================
+   MOBILE APP-STYLE BOTTOM TAB BAR
+   Hidden on desktop/tablet; takes over primary navigation on phones
+   (<=768px) so the site feels like a native app instead of a shrunk
+   desktop page. See script.js — it reuses the same section-switching
+   logic as the desktop nav links.
+   ========================================= */
+.mobile-tabbar {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--gray-200);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+    padding: 0.4rem 0.25rem;
+    padding-bottom: calc(0.4rem + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 768px) {
+    .mobile-tabbar { display: flex; align-items: stretch; justify-content: space-between; }
+}
+
+.tabbar-link {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0.4rem 0.1rem;
+    color: var(--gray-500);
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.tabbar-link i { font-size: 1.15rem; transition: transform 0.2s ease; }
+
+.tabbar-link:active { transform: scale(0.92); }
+
+.tabbar-link.active-link {
+    color: var(--gold-dark);
+}
+
+.tabbar-link.active-link i {
+    color: var(--gold-primary);
+    transform: translateY(-1px);
+}
+
+/* =========================================
    PROFESSIONAL HOME PAGE LAYOUT
    ========================================= */
 .hero {
     position: relative;
-    padding: 160px 0 80px; /* Generous top and bottom breathing room */
+    padding: 210px 0 80px; /* Generous top and bottom breathing room, clears the 170px logo */
     background: transparent;
     text-align: center;
     display: none;
@@ -359,9 +418,9 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 /* Other Sections (Services, Portfolio, About, Contact) */
-section[id] { display: none; padding: 140px 0 80px; }
+section[id] { display: none; padding: 200px 0 80px; }
 section[id].active-section { display: block; animation: fadeInPage 0.4s ease-out forwards; }
-.section-header { text-align: center; max-width: 700px; margin: 0 auto 10rem; }
+.section-header { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
 .section-tag { display: inline-block; padding: var(--space-sm) var(--space-lg); background: rgba(42, 122, 122, 0.1); color: var(--teal-primary); border-radius: var(--radius-full); font-size: 0.875rem; font-weight: 600; margin-bottom: var(--space-md); letter-spacing: 0.5px; text-transform: uppercase; }
 .section-title { margin-bottom: var(--space-lg); color: var(--gray-900); }
 .section-description { font-size: 1.125rem; color: var(--gray-600); }
@@ -541,7 +600,7 @@ section[id].active-section { display: block; animation: fadeInPage 0.4s ease-out
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
 .footer-brand .navbar-brand img {
     filter: grayscale(100%) brightness(0) invert(1); /* Makes it pure black & white */
-    height: 60px; /* Standard professional footer size (170px is too big for a footer!) */
+    height: 90px;
     opacity: 0.95; 
     animation: none !important; /* <--- THIS OVERRIDES AND KILLS THE SHIMMER */
     transition: opacity 0.3s ease;
@@ -620,11 +679,11 @@ section[id].active-section { display: block; animation: fadeInPage 0.4s ease-out
 @media (max-width: 992px) {
     /* Navbar Adjustments */
     .navbar-container { padding: 0.5rem 1.5rem; }
-    .navbar-brand img { height: 90px !important; max-width: 220px; }
+    .navbar-brand img { height: 120px !important; max-width: 260px; }
     .navbar-brand span { font-size: 1.25rem; }
     
     /* Hero Adjustments */
-    .hero { padding-top: 120px; padding-bottom: 4rem; }
+    .hero { padding-top: 160px; padding-bottom: 4rem; }
     .hero-container { max-width: 100%; }
     
     /* Grids to 1 Column */
@@ -638,37 +697,35 @@ section[id].active-section { display: block; animation: fadeInPage 0.4s ease-out
     .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 
-/* 3. Mobile Phones (Max 768px) */
+/* 3. Mobile Phones (Max 768px) — app-shell navigation takes over here.
+   The hamburger dropdown is retired in favor of a fixed bottom tab bar
+   (see .mobile-tabbar below), which is what makes the site feel like a
+   native app on iOS/Android rather than a shrunk desktop page. */
 @media (max-width: 768px) {
-    /* Navbar Mobile */
-    .navbar { padding: 0.5rem 0; }
-    .navbar-container { flex-wrap: wrap; padding: 0.5rem 1rem; }
-    .navbar-brand { width: 100%; justify-content: center; margin-bottom: 0.5rem; }
-    .navbar-brand img { height: 60px !important; max-width: 180px; }
-    .navbar-brand span { display: none; /* Hides text on mobile to save space */ }
-    
-    .navbar-toggle { display: flex; position: absolute; right: 1rem; top: 1rem; }
-    
-    /* Mobile Menu Dropdown (container is hidden by default via the 968px rule above;
-       this styles it once script.js adds "mobile-open" to .navbar-menu-container) */
-    .navbar-menu-container.mobile-open {
-        display: flex !important;
-        flex-direction: column;
-        width: 100%;
-        background: #fff;
-        padding: 1rem;
-        border-top: 1px solid var(--gray-200);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    /* Navbar Mobile - logo only, centered, top bar stays slim */
+    .navbar {
+        padding: 0.5rem 0;
+        padding-top: calc(0.5rem + env(safe-area-inset-top));
+        justify-content: center;
     }
-    .navbar-menu-container.mobile-open .navbar-link { width: 100%; text-align: center; padding: 1rem; }
-    .navbar-menu-container.mobile-open .navbar-cta { display: block; text-align: center; margin-top: 1rem; }
+    .navbar-container { flex-wrap: wrap; padding: 0.5rem 1rem; }
+    .navbar-brand { justify-content: center; }
+    .navbar-brand img { height: 84px !important; max-width: 220px; }
+    .navbar-brand span { display: none; /* Hides text on mobile to save space */ }
+
+    /* Top hamburger + dropdown are replaced by the bottom tab bar below */
+    .navbar-toggle,
+    .navbar-menu-container { display: none !important; }
 
     /* Hero Mobile */
-    .hero { padding-top: 100px; padding-bottom: 3rem; }
+    .hero { padding-top: 130px; padding-bottom: 3rem; }
     .hero-title { font-size: clamp(2rem, 8vw, 2.5rem); line-height: 1.2; }
     .hero-tagline { font-size: 1.1rem; }
     .hero-description { font-size: 1rem; }
     .hero-buttons { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
+
+    /* Room for the fixed bottom tab bar so it never covers content */
+    body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 }
 
 /* =========================================
@@ -702,50 +759,17 @@ section[id].active-section { display: block; animation: fadeInPage 0.4s ease-out
     }
     
     .navbar-brand img {
-        height: 45px !important;
-        max-width: 120px;
+        height: 60px !important;
+        max-width: 150px;
     }
     
     .navbar-brand span {
         display: none; /* Hide text on very small screens */
     }
     
-    .navbar-toggle {
-        display: flex !important;
-        position: static;
-        margin-left: auto;
-        padding: 0.25rem;
-    }
-    
-    .navbar-toggle span {
-        width: 20px;
-        height: 2px;
-    }
-    
-    /* Mobile menu when open */
-    .navbar-menu-container.mobile-open {
-        display: flex !important;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #fff;
-        padding: 1rem;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        border-top: 1px solid var(--gray-200);
-        z-index: 999;
-    }
-    
-    .navbar-menu-container.mobile-open .navbar-link {
-        width: 100%;
-        text-align: center;
-        padding: 0.75rem;
-        font-size: 0.9rem;
-    }
-    
     /* Hero adjustments */
     .hero {
-        padding-top: 90px;
+        padding-top: 110px;
         padding-bottom: 2rem;
     }
     
@@ -870,7 +894,7 @@ section[id].active-section { display: block; animation: fadeInPage 0.4s ease-out
     }
     
     .footer-brand .navbar-brand img {
-        height: 50px;
+        height: 70px;
         margin: 0 auto;
     }
     
@@ -904,17 +928,8 @@ section[id].active-section { display: block; animation: fadeInPage 0.4s ease-out
     }
     
     .navbar-brand img {
-        height: 40px !important;
-        max-width: 100px;
-    }
-    
-    .navbar-toggle {
-        padding: 0.2rem;
-    }
-    
-    .navbar-toggle span {
-        width: 18px;
-        height: 2px;
+        height: 55px !important;
+        max-width: 130px;
     }
     
     /* Hero - ultra compact */
@@ -987,7 +1002,7 @@ section[id].active-section { display: block; animation: fadeInPage 0.4s ease-out
     
     /* Footer ultra compact */
     .footer-brand .navbar-brand img {
-        height: 45px;
+        height: 60px;
     }
     
     .footer-description {
@@ -998,8 +1013,8 @@ section[id].active-section { display: block; animation: fadeInPage 0.4s ease-out
 /* Tiny screens - 320px (iPhone SE, small Android) */
 @media (max-width: 320px) {
     .navbar-brand img {
-        height: 35px !important;
-        max-width: 90px;
+        height: 48px !important;
+        max-width: 110px;
     }
     
     .hero-title {
