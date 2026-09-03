@@ -21,9 +21,14 @@ window.addEventListener('load', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('a[href^="#"]');
     const sections = document.querySelectorAll('section[id]');
-    const navbarMenu = document.querySelector('.navbar-menu');
-    // Mobile Menu Toggle 
-    const navbarToggle = document.querySelector('.navbar-toggle'); const navbarMenuContainer = document.querySelector('.navbar-menu-container'); if (navbarToggle) { navbarToggle.addEventListener('click', () => { navbarMenuContainer.classList.toggle('mobile-open'); }); }
+    // Mobile Menu Toggle
+    const navbarToggle = document.querySelector('.navbar-toggle');
+    const navbarMenuContainer = document.querySelector('.navbar-menu-container');
+    if (navbarToggle) {
+        navbarToggle.addEventListener('click', () => {
+            navbarMenuContainer.classList.toggle('mobile-open');
+        });
+    }
 
     function switchTab(targetId) {
         sections.forEach(section => section.classList.remove('active-section'));
@@ -39,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
             activeLink.classList.add('active-link');
         }
 
-        if (navbarMenu) {
-            navbarMenu.classList.remove('mobile-open');
+        if (navbarMenuContainer) {
+            navbarMenuContainer.classList.remove('mobile-open');
         }
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -55,12 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
-    if (navbarToggle) {
-        navbarToggle.addEventListener('click', () => {
-            navbarMenu.classList.toggle('mobile-open');
-        });
-    }
 });
 
 const navbar = document.getElementById('navbar');
